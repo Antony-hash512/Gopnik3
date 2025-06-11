@@ -122,7 +122,7 @@ fn main() {
         match key.as_str() {
             "g" => {
                 println!("Ты шляешься по району");
-                get_event();
+                get_event(&mut player);
             }
             "h" => {
                 show_key_map(&player);
@@ -197,27 +197,54 @@ fn get_user_input_string() -> String {
 
 fn get_random_i64(min : i64, max : i64) -> i64 {
     let mut rng = rand::rngs::ThreadRng::default();
-    rng.gen_range(min..max)
+    rng.random_range(min..max)
 }
 
-fn spown_enemy(){
+fn spown_enemy() -> Fighter{
+    let enemy = Fighter {
+        fighter_type : String::new(),
+        level : get_random_i64(1, 10),
+        exp : 0,
+        health : 100,
+        max_health : 100,
+        strength : 10,
+        vitality : 10,
+        accuracy : 10,
+        agility : 10,
+        luck : 10,
+        intelligence : 1,
+        willpower : 100,
+        charisma : 10,
+        jaw_is_broken : false,
+    };
+    enemy
+}
 
+fn ask_to_fight(enemy: &Fighter) -> bool{
+    println!("Ты встретил врага уровня {}", enemy.level);
     println!("Будешь нарываться на врага? (y/n)");
     let input : String = get_user_input_string();
     let answer: &str = input.as_str();
     if answer == "y" {
         println!("Эй, пацан, ты из какого района?");
         println!("А ты по пинкам суди!");
+        return true;
     } else {
         println!("Ты не нарываешься на врага, и продолжаешь шляться по району");
+        return false;
     }
 }
 
-fn get_event(){
+fn get_event(player : &mut Player){
     let event_type = get_random_i64(1, 3);
     match event_type {
         2 => {
-            spown_enemy();
+            let enemy = spown_enemy();
+            if ask_to_fight(&enemy) {
+                println!("Ты вступаешь в бой с врагом");
+            } else {
+                println!("Ты не вступаешь в бой с врагом");
+            }
         }
         _ => {
             println!("Ничего не произошло");
