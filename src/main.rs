@@ -4,7 +4,7 @@ fn main() {
 
     let name : String;
     let life_style : i8;
-
+    println!("ГОПНИК 3: Кровь на асфальте. Rust Edition.");
 
     println!("20xx год от Р.Х.");
     println!("Ректор: ах ты урод, чёртов забивала!");
