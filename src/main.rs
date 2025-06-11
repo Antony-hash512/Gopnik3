@@ -122,6 +122,7 @@ fn main() {
         match key.as_str() {
             "g" => {
                 println!("Ты шляешься по району");
+                get_event();
             }
             "h" => {
                 show_key_map(&player);
@@ -200,7 +201,6 @@ fn get_random_i64(min : i64, max : i64) -> i64 {
 }
 
 fn spown_enemy(){
-    let enemy_level = get_random_i64(1, 10);
 
     println!("Будешь нарываться на врага? (y/n)");
     let input : String = get_user_input_string();
@@ -214,9 +214,9 @@ fn spown_enemy(){
 }
 
 fn get_event(){
-    let event_type = get_random_i64(1, 10);
+    let event_type = get_random_i64(1, 3);
     match event_type {
-        1 => {
+        2 => {
             spown_enemy();
         }
         _ => {
