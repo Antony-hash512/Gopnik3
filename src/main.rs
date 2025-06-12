@@ -18,6 +18,31 @@ struct Fighter {
     jaw_is_broken : bool,
 
 }
+impl Fighter {
+    fn kick (&self, enemy: &mut Fighter){
+        let mut damage : i64 = self.strength - enemy.vitality / 2;
+        if damage < 0 { damage=0 };
+        if enemy.health > damage {
+            enemy.health -= damage;
+            if self.fighter_type.as_str() == "игрок" {
+                println!("Ты бьёшь врага на {}, у него осталось здоровья {}", damage, enemy.health);
+            } else {
+                println!("Враг бьёт тебя на {}, у тебя остальсь {}", damage, enemy.health)
+            }
+        } else {
+            enemy.health = 0;
+            if self.fighter_type.as_str() == "игрок" {
+                println!("Ты бьёшь врага на {}, ВРАГ СДОХ", damage);
+            } else {
+                println!("Враг бьёт тебя на {}, ТЫ СДОХ КОНЕЦ ИГРЫ", damage)
+            }
+        }
+
+    }
+
+
+}
+
 struct Player {
     fighter : Fighter,
     money : i64,
@@ -30,19 +55,36 @@ struct Player {
     life_style : i8,
     name : String,
 }
+impl Player {
+    fn add_exp (&mut self,extra_exp : i64){
+        let mut exp_to_add_left : i64 = self.fighter.exp + extra_exp;
+        while exp_to_add_left > self.fighter.level * self.fighter.level {
+            exp_to_add_left -= self.fighter.level * self.fighter.level;
+            self.level_up();
+        }
+        self.fighter.exp += extra_exp;
+    }
+    fn level_up(&mut self){
+        self.fighter.level += 1;
+        println!("Ты прокачал уровень, теперь твой уровень: {}", self.fighter.level)
+    }
+}
 
-fn main() {
+fn main(){
+    new_game();
     
+}
 
 
-
+fn new_game() {
+    
     let mut player : Player = Player {
         fighter : Fighter {
-            fighter_type : String::new(),
+            fighter_type : "игрок".to_string(),
             level : 1,
             exp : 0,
-            health : 100,
-            max_health : 100,
+            health : 150,
+            max_health : 150,
             strength : 10,
             vitality : 10,
             accuracy : 10,
@@ -118,6 +160,11 @@ fn main() {
     }
     show_key_map(&player);
     loop {
+        if player.fighter.health <= 0 {
+            println!("ТЫ СДОХ, КОНЕЦ ИГРЫ");
+            break;            
+        }
+
         let key = get_user_input_string();
         match key.as_str() {
             "g" => {
@@ -174,7 +221,6 @@ fn show_key_map(player : &Player) {
 }
 
 fn get_user_input_i8() -> i8 {
-
     let mut buffer = String::new();
     io::stdin().read_line(&mut buffer).expect("Не удалось прочитать строку");
     buffer.trim().parse().expect("Please type a number!")
@@ -239,15 +285,57 @@ fn get_event(player : &mut Player){
     let event_type = get_random_i64(1, 3);
     match event_type {
         2 => {
-            let enemy = spown_enemy();
+            let mut enemy = spown_enemy();
             if ask_to_fight(&enemy) {
                 println!("Ты вступаешь в бой с врагом");
+                battle(player, &mut enemy)
             } else {
                 println!("Ты не вступаешь в бой с врагом");
             }
         }
         _ => {
             println!("Ничего не произошло");
+        }
+    }
+}
+
+fn battle(player: &mut Player, enemy: &mut Fighter){
+    println!("Начался бой! У тебя {} здоровья, у врага {} здоровья", player.fighter.health, enemy.health);
+    println!("k - ударить, h - чё за ботва?, r - убежать");
+    
+    loop{
+        // Проверяем, не умер ли кто-то
+        if player.fighter.health <= 0 {
+            println!("Ты проиграл бой!");
+            break;
+        }
+        if enemy.health <= 0 {
+            println!("Ты выиграл бой!");
+            // Можно добавить опыт игроку
+            player.add_exp(enemy.level * 20);
+            break;
+        }
+        
+        let key = get_user_input_string();
+        match key.as_str() {
+            "k" => {
+                player.fighter.kick(enemy);
+                if enemy.health > 0 {
+                    enemy.kick(&mut player.fighter);
+                }
+            }
+            "h" => {
+                println!("k - ударить врага");
+                println!("r - убежать из боя");
+                println!("h - показать эту помощь");
+            }
+            "r" => {
+                println!("Ты такой ссыкло, что смог сбежать из боя!");
+                break;
+            }
+            _ => {
+                println!("Неизвестная команда! Нажми h для помощи");
+            }
         }
     }
 }
