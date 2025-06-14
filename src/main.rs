@@ -54,10 +54,10 @@ fn new_game() {
     println!("ГОПНИК 3: Кровь на асфальте. Rust Edition.");
 
     println!("20xx год от Р.Х.");
-    println!("{}: ах ты урод, чёртов забивала!", "Ректор".yellow());
-    println!("{}: а ты типа чё?", "Ты".green());
-    println!("{}: всё, ты отчислен! Вали нахуй с универа!", "Ректор".yellow());
-    println!("И так теперь ты из крутого пацана превратился в опущенного");
+    println!("{}: ах ты урод, чёртов забивала!", "Ректор".yellow().bold());
+    println!("{}: а ты типа чё?", "Ты".green().bold());
+    println!("{}: всё, ты отчислен! Вали нахуй с универа!", "Ректор".yellow().bold());
+    println!("{}","И так теперь ты из крутого пацана превратился в опущенного".red().bold());
 
     // запрашиваем ввод у пользователя
     player.name = get_user_input_string("Выбери погоняло: ");
@@ -201,13 +201,7 @@ fn show_key_map(player : &Player) {
     }
     println!("q - выйти из игры");
 }
-/*
-fn get_user_input_i8() -> i8 {
-    let mut buffer = String::new();
-    io::stdin().read_line(&mut buffer).expect("Не удалось прочитать строку");
-    buffer.trim().parse().expect("Please type a number!")
-}
-*/
+
 fn get_user_input_string(prefix: &str) -> String {
     use std::io::Write;
     
@@ -299,8 +293,8 @@ fn battle(player: &mut Player, enemy: &mut Fighter){
             break;
         }
         if enemy.health <= 0 {
-            println!("Ты выиграл бой!");
-            println!("Пиво победителю!");
+            println!("{}",format!("Ты выиграл бой!").green().bold());
+            println!("{}",format!("Пиво победителю!").green().bold());
             player.bottles += 2;
             // Можно добавить опыт игроку
             player.add_exp(enemy.level * 20);
