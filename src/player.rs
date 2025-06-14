@@ -41,6 +41,7 @@ impl Player {
         println!("По жизни: {}", self.life_style);
         println!("Уровень: {} ({})", self.fighter.level, self.get_level_discription());
         println!("Опыт: {}, до следующего уровня тебе нужно ещё {} качков опыта", self.current_level_exp, self.fighter.level * 100 - self.current_level_exp);
+        println!("Здоровье: {}/{}", self.fighter.health, self.fighter.max_health);
         println!("Бутылки (пиво или протеин): {}", self.bottles);
         println!("Бабки: {}", self.money);
 

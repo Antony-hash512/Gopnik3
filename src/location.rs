@@ -24,7 +24,7 @@ impl Location {
             Location::Market => "Рынок> ",
             Location::Vet => "Ветеринар> ",
             Location::Bar => "Бар> ",
-            Location::Gym => "Тренажерный зал> ",
+            Location::Gym => "Качалка> ",
         }
     }
 }

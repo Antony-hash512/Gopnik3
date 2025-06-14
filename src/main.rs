@@ -1,4 +1,6 @@
 use std::io;
+use anstream::println;
+use owo_colors::OwoColorize as _;
 use rand::Rng;
 
 mod fighter;
@@ -52,9 +54,9 @@ fn new_game() {
     println!("ГОПНИК 3: Кровь на асфальте. Rust Edition.");
 
     println!("20xx год от Р.Х.");
-    println!("Ректор: ах ты урод, чёртов забивала!");
-    println!("Ты: а ты типа чё?");
-    println!("Ректор: всё, ты отчислен! Вали нахуй с универа!");
+    println!("{}: ах ты урод, чёртов забивала!", "Ректор".yellow());
+    println!("{}: а ты типа чё?", "Ты".green());
+    println!("{}: всё, ты отчислен! Вали нахуй с универа!", "Ректор".yellow());
     println!("И так теперь ты из крутого пацана превратился в опущенного");
 
     // запрашиваем ввод у пользователя
@@ -129,8 +131,8 @@ fn new_game() {
                 break;
             }
             "b" => {
-                println!("Ты пьёшь пиво");
                 if player.bottles > 0 {
+                    println!("{}",format!("Ты пьёшь пиво").green().bold());
                     player.bottles -= 1;
                     player.fighter.health += 10;
                     if player.fighter.health > player.fighter.max_health {
@@ -139,12 +141,12 @@ fn new_game() {
                     println!("Теперь у тебя {}/{} здоровья", player.fighter.health, player.fighter.max_health);
                     println!("Ты потратил 1 бутылку пива, у тебя осталось {} бутылок", player.bottles);
                 } else {
-                    println!("У тебя нет бутылок!");
+                    println!("{}",format!("У тебя нет бутылок!").red().bold());
                 }
             }
             "p" => {
-                println!("Ты пьёшь протеин");
                 if player.bottles > 0 {
+                    println!("{}",format!("Ты пьёшь протеин").green().bold());
                     player.bottles -= 1;
                     player.fighter.health += 10;
                     if player.fighter.health > player.fighter.max_health {
@@ -153,7 +155,7 @@ fn new_game() {
                     println!("Теперь у тебя {}/{} здоровья", player.fighter.health, player.fighter.max_health);
                     println!("Ты потратил 1 бутылку протеина, у тебя осталось {} бутылок", player.bottles);
                 } else {
-                    println!("У тебя нет бутылок!");
+                    println!("{}",format!("У тебя нет бутылок!").red().bold());
                 }
                 
             }

@@ -1,4 +1,6 @@
 use std::io;
+use anstream::{print, println};
+use owo_colors::OwoColorize as _;
 use rand::Rng;
 
 pub struct Fighter {
@@ -25,16 +27,16 @@ impl Fighter {
         if enemy.health > damage {
             enemy.health -= damage;
             if ! self.is_npc {
-                println!("Ты бьёшь врага на {}, у него осталось здоровья {}", damage, enemy.health);
+                println!("{}",format!("Ты бьёшь врага на {}, у него осталось здоровья {}", damage, enemy.health).green().bold());
             } else {
-                println!("Враг бьёт тебя на {}, у тебя остальсь {}", damage, enemy.health)
+                println!("{}",format!("Враг бьёт тебя на {}, у тебя остальсь {}", damage, enemy.health).red().bold());
             }
         } else {
             enemy.health = 0;
             if ! self.is_npc {
-                println!("Ты бьёшь врага на {}, ВРАГ СДОХ", damage);
+                println!("{}",format!("Ты бьёшь врага на {}, ВРАГ СДОХ", damage).green().bold());
             } else {
-                println!("Враг бьёт тебя на {}, ТЫ СДОХ КОНЕЦ ИГРЫ", damage)
+                println!("{}",format!("Враг бьёт тебя на {}, ТЫ СДОХ КОНЕЦ ИГРЫ", damage).red().bold());
             }
         }
 
