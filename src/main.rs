@@ -43,7 +43,7 @@ fn new_game() {
         whores_is_found : false,
         bar_is_found : false,
         vet_is_found : false,
-        life_style : 3,
+        life_style : "нормис".to_string(),
         name : String::new(),
     };
 
@@ -69,25 +69,29 @@ fn new_game() {
     println!("5. Чё за ботва?");
     // запрашиваем ввод цифры
     loop {
-        player.life_style = get_user_input_i8();
-        match player.life_style {
-            1 => {
+        let player_life_style = get_user_input_string("Введи цифру: ");
+        match player_life_style.as_str() {
+            "1" => {
                 println!("Ты пацан!");
+                player.life_style = "пацан".to_string();
                 break;
             }
-            2 => {
+            "2" => {
                 println!("Ты отморозок!");
+                player.life_style = "отморозок".to_string();
                 break;
             }
-            3 => {
+            "3" => {
                 println!("Ты нормис!");
+                player.life_style = "нормис".to_string();
                 break;
             }
-            4 => {
+            "4" => {
                 println!("Ты спортик!");
+                player.life_style = "спортик".to_string();
                 break;
             }
-            5 => {
+            "5" => {
                 println!("1. Пацан: слабый на старте, но в два раза сильнее набирает опыт в драках");
                 println!("2. Отморозок: более безбашенный на старте, но тугодум и тормоз в плане прокачки");
                 println!("3. Нормис: ни рыба ни мясо, что-то среднее между пацаном и отморозком");
@@ -136,7 +140,7 @@ fn show_key_map(player : &Player) {
     println!("h - разуть глаза (вспомнтить что ты можешь)");
     println!("s - посмотреть в лужу на свою рожу");
     println!("k - пинать какого-то отморозка");
-    if player.life_style != 4 {
+    if player.life_style.as_str() != "спортик" {
         println!("b - пить пиво");
     } else {
         println!("p - пить протеин");
@@ -158,13 +162,13 @@ fn show_key_map(player : &Player) {
     }
     println!("q - выйти из игры");
 }
-
+/*
 fn get_user_input_i8() -> i8 {
     let mut buffer = String::new();
     io::stdin().read_line(&mut buffer).expect("Не удалось прочитать строку");
     buffer.trim().parse().expect("Please type a number!")
 }
-
+*/
 fn get_user_input_string(prefix: &str) -> String {
     use std::io::Write;
     

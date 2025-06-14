@@ -16,7 +16,7 @@ pub struct Player {
     pub whores_is_found : bool,
     pub bar_is_found : bool,
     pub vet_is_found : bool,
-    pub life_style : i8,
+    pub life_style : String,
     pub name : String,
 }
 impl Player {
