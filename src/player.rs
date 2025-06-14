@@ -26,9 +26,11 @@ impl Player {
         while exp_to_add_left > exp_to_add_next_level {
             exp_to_add_left -= exp_to_add_next_level;
             self.level_up();
+            self.current_level_exp = 0;
             exp_to_add_next_level = self.fighter.level * 100;
         }
         self.current_level_exp += exp_to_add_left;
+        println!("Твой опыт: {}, до следующего уровня тебе нужно ещё {} качков опыта", self.current_level_exp, exp_to_add_next_level-self.current_level_exp);
     }
     fn level_up(&mut self){
         self.fighter.level += 1;
