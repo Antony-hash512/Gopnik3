@@ -3,9 +3,11 @@ use rand::Rng;
 
 mod fighter;
 mod player;
+mod location;
 
 use crate::player::Player;
 use crate::fighter::Fighter;
+use crate::location::Location;
 
 fn main(){
     new_game();
@@ -13,14 +15,12 @@ fn main(){
 }
 
 
-fn new_game() {
-    
+fn new_game() { 
     let mut player : Player = Player {
         fighter : Fighter {
             fighter_type : "игрок".to_string(),
             is_npc : false,
             level : 1,
-            exp : 0,
             health : 150,
             max_health : 150,
             strength : 10,
@@ -32,7 +32,10 @@ fn new_game() {
             willpower : 100,
             charisma : 10,
             jaw_is_broken : false,
+            leg_is_broken : false,
         },
+        location : Location::Street,
+        current_level_exp : 0,
         money : 0,
         bottles : 0,
         gym_is_found : false,
@@ -55,8 +58,7 @@ fn new_game() {
     println!("И так теперь ты из крутого пацана превратился в опущенного");
 
     // запрашиваем ввод у пользователя
-    println!("Выбери погоняло: ");
-    player.name = get_user_input_string();
+    player.name = get_user_input_string("Выбери погоняло: ");
     println!("Итак, теперь ты {}!", player.name);
     
     println!("Выбери кто ты по жизни: ");
@@ -102,8 +104,7 @@ fn new_game() {
             println!("ТЫ СДОХ, КОНЕЦ ИГРЫ");
             break;            
         }
-
-        let key = get_user_input_string();
+        let key = get_user_input_string(player.location.get_prefix());
         match key.as_str() {
             "g" => {
                 println!("Ты шляешься по району");
@@ -164,7 +165,13 @@ fn get_user_input_i8() -> i8 {
     buffer.trim().parse().expect("Please type a number!")
 }
 
-fn get_user_input_string() -> String {
+fn get_user_input_string(prefix: &str) -> String {
+    use std::io::Write;
+    
+    // Выводим префикс перед вводом
+    print!("{}", prefix);
+    io::stdout().flush().unwrap(); // Принудительно выводим буфер
+    
     // 1. Создаем мутабельный буфер. Его "жизнь" ограничена этой функцией.
     let mut buffer = String::new();
 
@@ -189,7 +196,6 @@ fn spown_enemy() -> Fighter{
         fighter_type : String::new(),
         is_npc : true,
         level : get_random_i64(1, 10),
-        exp : 0,
         health : 100,
         max_health : 100,
         strength : 10,
@@ -201,6 +207,7 @@ fn spown_enemy() -> Fighter{
         willpower : 100,
         charisma : 10,
         jaw_is_broken : false,
+        leg_is_broken : false,
     };
     enemy
 }
@@ -208,7 +215,7 @@ fn spown_enemy() -> Fighter{
 fn ask_to_fight(enemy: &Fighter) -> bool{
     println!("Ты встретил врага уровня {}", enemy.level);
     println!("Будешь нарываться на врага? (y/n)");
-    let input : String = get_user_input_string();
+    let input : String = get_user_input_string("");
     let answer: &str = input.as_str();
     if answer == "y" {
         println!("Эй, пацан, ты из какого района?");
@@ -255,7 +262,7 @@ fn battle(player: &mut Player, enemy: &mut Fighter){
             break;
         }
         
-        let key = get_user_input_string();
+        let key = get_user_input_string("Битва> ");
         match key.as_str() {
             "k" => {
                 player.fighter.kick(enemy);

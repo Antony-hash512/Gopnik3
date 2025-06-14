@@ -5,7 +5,6 @@ pub struct Fighter {
     pub fighter_type: String,
     pub is_npc: bool,
     pub level: i64,
-    pub exp: i64, // тут мы храним экспу, имеет текущего уровня, а не суммарную
     pub health: i64,
     pub max_health: i64,
     pub strength: i64,
@@ -17,6 +16,7 @@ pub struct Fighter {
     pub willpower: i64,
     pub charisma: i64,
     pub jaw_is_broken: bool,
+    pub leg_is_broken: bool,
 }
 impl Fighter {
     pub fn kick (&self, enemy: &mut Fighter){
