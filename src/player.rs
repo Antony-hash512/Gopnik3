@@ -1,7 +1,6 @@
 use std::io;
 use rand::Rng;
 
-mod fighter;
 use crate::fighter::Fighter;
 
 pub struct Player {

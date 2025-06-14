@@ -4,7 +4,7 @@ use rand::Rng;
 pub struct Fighter {
     pub fighter_type: String,
     pub level: i64,
-    pub exp: i64,
+    pub exp: i64, // тут мы храним экспу, имеет текущего уровня, а не суммарную
     pub health: i64,
     pub max_health: i64,
     pub strength: i64,
