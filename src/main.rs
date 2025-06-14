@@ -18,6 +18,7 @@ fn new_game() {
     let mut player : Player = Player {
         fighter : Fighter {
             fighter_type : "игрок".to_string(),
+            is_npc : false,
             level : 1,
             exp : 0,
             health : 150,
@@ -186,6 +187,7 @@ fn get_random_i64(min : i64, max : i64) -> i64 {
 fn spown_enemy() -> Fighter{
     let enemy = Fighter {
         fighter_type : String::new(),
+        is_npc : true,
         level : get_random_i64(1, 10),
         exp : 0,
         health : 100,

@@ -3,6 +3,7 @@ use rand::Rng;
 
 pub struct Fighter {
     pub fighter_type: String,
+    pub is_npc: bool,
     pub level: i64,
     pub exp: i64, // тут мы храним экспу, имеет текущего уровня, а не суммарную
     pub health: i64,
@@ -23,14 +24,14 @@ impl Fighter {
         if damage < 0 { damage=0 };
         if enemy.health > damage {
             enemy.health -= damage;
-            if self.fighter_type.as_str() == "игрок" {
+            if ! self.is_npc {
                 println!("Ты бьёшь врага на {}, у него осталось здоровья {}", damage, enemy.health);
             } else {
                 println!("Враг бьёт тебя на {}, у тебя остальсь {}", damage, enemy.health)
             }
         } else {
             enemy.health = 0;
-            if self.fighter_type.as_str() == "игрок" {
+            if ! self.is_npc {
                 println!("Ты бьёшь врага на {}, ВРАГ СДОХ", damage);
             } else {
                 println!("Враг бьёт тебя на {}, ТЫ СДОХ КОНЕЦ ИГРЫ", damage)
