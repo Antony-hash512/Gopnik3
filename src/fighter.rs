@@ -1,7 +1,7 @@
 use std::io;
 use rand::Rng;
 
-struct Fighter {
+pub struct Fighter {
     fighter_type : String,
     level : i64,
     exp : i64,

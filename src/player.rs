@@ -1,9 +1,9 @@
 use std::io;
 use rand::Rng;
 
-mod fighter
+use crate::fighter::Fighter
 
-struct Player {
+pub struct Player {
     fighter : Fighter,
     money : i64,
     bottles : i64,

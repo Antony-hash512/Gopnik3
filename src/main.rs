@@ -1,8 +1,8 @@
 use std::io;
 use rand::Rng;
 
-mod fighter
-mod player
+mod fighter;
+mod player;
 
 
 
