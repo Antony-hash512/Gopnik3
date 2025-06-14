@@ -122,10 +122,47 @@ fn new_game() {
             }
             "s" => {
                 println!("Ты смотришь в лужу на свою рожу");
+                player.show_info();
             }
             "q" => {
                 println!("Ты выходишь из окна");
                 break;
+            }
+            "b" => {
+                println!("Ты пьёшь пиво");
+                if player.bottles > 0 {
+                    player.bottles -= 1;
+                    player.fighter.health += 10;
+                    if player.fighter.health > player.fighter.max_health {
+                        player.fighter.health = player.fighter.max_health;
+                    }
+                    println!("Теперь у тебя {}/{} здоровья", player.fighter.health, player.fighter.max_health);
+                    println!("Ты потратил 1 бутылку пива, у тебя осталось {} бутылок", player.bottles);
+                } else {
+                    println!("У тебя нет бутылок!");
+                }
+            }
+            "p" => {
+                println!("Ты пьёшь протеин");
+                if player.bottles > 0 {
+                    player.bottles -= 1;
+                    player.fighter.health += 10;
+                    if player.fighter.health > player.fighter.max_health {
+                        player.fighter.health = player.fighter.max_health;
+                    }
+                    println!("Теперь у тебя {}/{} здоровья", player.fighter.health, player.fighter.max_health);
+                    println!("Ты потратил 1 бутылку протеина, у тебя осталось {} бутылок", player.bottles);
+                } else {
+                    println!("У тебя нет бутылок!");
+                }
+                
+            }
+            "cheat_hp" => {
+                player.fighter.health = player.fighter.max_health;
+                println!("Теперь у тебя {} здоровья", player.fighter.health);
+            }
+            "cheat_money" => {
+                player.money += 1000;
             }
             _ => {
                 println!("Ты, что слепашара!? Введи h для того чтобы разуть глаза");
@@ -261,6 +298,8 @@ fn battle(player: &mut Player, enemy: &mut Fighter){
         }
         if enemy.health <= 0 {
             println!("Ты выиграл бой!");
+            println!("Пиво победителю!");
+            player.bottles += 2;
             // Можно добавить опыт игроку
             player.add_exp(enemy.level * 20);
             break;
