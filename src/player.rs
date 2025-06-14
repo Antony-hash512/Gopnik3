@@ -1,22 +1,23 @@
 use std::io;
 use rand::Rng;
 
-use crate::fighter::Fighter
+mod fighter;
+use crate::fighter::Fighter;
 
 pub struct Player {
-    fighter : Fighter,
-    money : i64,
-    bottles : i64,
-    gym_is_found : bool,
-    girl_is_found : bool,
-    whores_is_found : bool,
-    bar_is_found : bool,
-    vet_is_found : bool,
-    life_style : i8,
-    name : String,
+    pub fighter : Fighter,
+    pub money : i64,
+    pub bottles : i64,
+    pub gym_is_found : bool,
+    pub girl_is_found : bool,
+    pub whores_is_found : bool,
+    pub bar_is_found : bool,
+    pub vet_is_found : bool,
+    pub life_style : i8,
+    pub name : String,
 }
 impl Player {
-    fn add_exp (&mut self,extra_exp : i64){
+    pub fn add_exp (&mut self,extra_exp : i64){
         let mut exp_to_add_left : i64 = self.fighter.exp + extra_exp;
         while exp_to_add_left > self.fighter.level * self.fighter.level {
             exp_to_add_left -= self.fighter.level * self.fighter.level;

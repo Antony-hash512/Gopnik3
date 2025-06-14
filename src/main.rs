@@ -4,7 +4,8 @@ use rand::Rng;
 mod fighter;
 mod player;
 
-
+use crate::player::Player;
+use crate::fighter::Fighter;
 
 fn main(){
     new_game();
